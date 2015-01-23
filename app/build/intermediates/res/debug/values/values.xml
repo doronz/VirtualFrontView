@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/C:/Users/D/AndroidStudioProjects/VirtualFrontView/app/src/main/res/values/strings.xml -->
+    <eat-comment />
+
+    <string-array name="bitrate_array">
+        <item>100000</item>
+        <item>250000</item>
+        <item>500000</item>
+        <item>512000</item>
+        <item>1000000</item>
+        <item>1500000</item>
+        <item>2000000</item>
+    </string-array>
+    <string-array name="resolution_array">
+        <item>176x144</item>
+        <item>320x240</item>
+        <item>352x288</item>
+        <item>528x432</item>
+        <item>704x576</item>
+    </string-array>
+    <!-- From: file:/C:/Users/D/AndroidStudioProjects/VirtualFrontView/app/src/main/res/values/dimens.xml -->
+    <eat-comment />
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- From: file:/C:/Users/D/AndroidStudioProjects/VirtualFrontView/app/src/main/res/values/strings.xml -->
+    <eat-comment />
+
+    <string name="action_settings">Setings</string>
+    <string name="app_name">VirtualFrontView</string>
+    <string name="bitrate_prompt">Bitrate</string>
+    <string name="client_button">Client</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="main_text">Welcome to Virtual Front View, please choose Server if you would like to stream from your device, or type in the IP of the server and hit Client if you would like to receive a stream.</string>
+    <string name="resolution_prompt">Resolution</string>
+    <string name="server_button">Server</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="title_activity_client">ClientActivity</string>
+    <string name="title_activity_server">ServerActivity</string>
+    <!-- From: file:/C:/Users/D/AndroidStudioProjects/VirtualFrontView/app/src/main/res/values/styles.xml -->
+    <eat-comment />
+
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+</resources>

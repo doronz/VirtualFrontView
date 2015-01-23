@@ -1,0 +1,36 @@
+04-20 14:57:27.871: D/MainActivity(25892): Preview started.
+04-20 14:57:29.322: D/MainActivity(25892): Preview configured.
+04-20 14:57:29.322: D/MainActivity(25892): v=0
+04-20 14:57:29.322: D/MainActivity(25892): o=- 0 0 IN IP4 null
+04-20 14:57:29.322: D/MainActivity(25892): s=Unnamed
+04-20 14:57:29.322: D/MainActivity(25892): i=N/A
+04-20 14:57:29.322: D/MainActivity(25892): c=IN IP4 192.168.42.200
+04-20 14:57:29.322: D/MainActivity(25892): t=0 0
+04-20 14:57:29.322: D/MainActivity(25892): a=recvonly
+04-20 14:57:29.322: D/MainActivity(25892): m=video 5006 RTP/AVP 96
+04-20 14:57:29.322: D/MainActivity(25892): a=rtpmap:96 H264/90000
+04-20 14:57:29.322: D/MainActivity(25892): a=fmtp:96 packetization-mode=1;profile-level-id=42c014;sprop-parameter-sets=Z0LAFOkCg/QDwiEagA==,aM4G4g==;
+04-20 14:57:29.322: D/MainActivity(25892): a=control:trackID=1
+04-20 14:57:30.534: D/MainActivity(25892): Session started.
+04-20 14:57:30.534: D/MainActivity(25892): Bitrate: 0
+04-20 14:57:31.034: D/MainActivity(25892): Bitrate: 386099
+04-20 14:57:31.525: D/MainActivity(25892): Bitrate: 482657
+04-20 14:57:32.025: D/MainActivity(25892): Bitrate: 486698
+04-20 14:57:32.526: D/MainActivity(25892): Bitrate: 494632
+04-20 14:57:33.036: D/MainActivity(25892): Bitrate: 498574
+04-20 14:57:33.537: D/MainActivity(25892): Bitrate: 498884
+04-20 14:57:34.037: D/MainActivity(25892): Bitrate: 501849
+04-20 14:57:34.538: D/MainActivity(25892): Bitrate: 500501
+04-20 14:57:35.039: D/MainActivity(25892): Bitrate: 505590
+04-20 14:57:35.539: D/MainActivity(25892): Bitrate: 502136
+04-20 14:57:36.040: D/MainActivity(25892): Bitrate: 505252
+04-20 14:57:36.540: D/MainActivity(25892): Bitrate: 512830
+04-20 14:57:37.041: D/MainActivity(25892): Bitrate: 511028
+04-20 14:57:37.541: D/MainActivity(25892): Bitrate: 508499
+04-20 14:57:38.042: D/MainActivity(25892): Bitrate: 510286
+04-20 14:57:38.552: D/MainActivity(25892): Bitrate: 505211
+04-20 14:57:39.053: D/MainActivity(25892): Bitrate: 510472
+04-20 14:57:39.553: D/MainActivity(25892): Bitrate: 507518
+04-20 14:57:40.574: D/MainActivity(25892): Session stopped.
+04-20 14:57:40.594: D/MainActivity(25892): Bitrate: 0
+04-20 14:57:57.943: D/MainActivity(25892): Session stopped.

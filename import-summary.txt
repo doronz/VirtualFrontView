@@ -1,0 +1,253 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .gitignore
+* .idea\
+* .idea\compiler.xml
+* .idea\copyright\
+* .idea\copyright\profiles_settings.xml
+* .idea\encodings.xml
+* .idea\inspectionProfiles\
+* .idea\inspectionProfiles\Project_Default.xml
+* .idea\inspectionProfiles\profiles_settings.xml
+* .idea\libraries\
+* .idea\libraries\android_support_v4.xml
+* .idea\libraries\dexedLibs.xml
+* .idea\misc.xml
+* .idea\modules.xml
+* .idea\scopes\
+* .idea\scopes\scope_settings.xml
+* .idea\vcs.xml
+* .idea\workspace.xml
+* README.md
+* Screenshots\
+* Screenshots\Client Side\
+* Screenshots\Client Side\Car.png
+* Screenshots\Client Side\Cup.png
+* Screenshots\Client Side\Parking_Lot.png
+* Screenshots\Client Side\Parking_Lot2.png
+* Screenshots\Server Side\
+* Screenshots\Server Side\Car.png
+* Screenshots\Server Side\Cup.png
+* Screenshots\Server Side\Parking_Lot.png
+* Screenshots\Server Side\Parking_Lot2.png
+* Screenshots\VFV_Home.png
+* TestPlan.pdf
+* VirtualFrontView.iml
+* ic_launcher-web.png
+* libstreaming\
+* libstreaming\.classpath
+* libstreaming\.gitignore
+* libstreaming\.project
+* libstreaming\.settings\
+* libstreaming\.settings\org.eclipse.jdt.core.prefs
+* libstreaming\AndroidManifest.xml
+* libstreaming\LICENSE
+* libstreaming\README.md
+* libstreaming\build.xml
+* libstreaming\doc\
+* libstreaming\doc\allclasses-frame.html
+* libstreaming\doc\allclasses-noframe.html
+* libstreaming\doc\constant-values.html
+* libstreaming\doc\deprecated-list.html
+* libstreaming\doc\help-doc.html
+* libstreaming\doc\index-all.html
+* libstreaming\doc\index.html
+* libstreaming\doc\net\
+* libstreaming\doc\net\majorkernelpanic\
+* libstreaming\doc\net\majorkernelpanic\streaming\
+* libstreaming\doc\net\majorkernelpanic\streaming\MediaStream.html
+* libstreaming\doc\net\majorkernelpanic\streaming\Session.Callback.html
+* libstreaming\doc\net\majorkernelpanic\streaming\Session.html
+* libstreaming\doc\net\majorkernelpanic\streaming\SessionBuilder.html
+* libstreaming\doc\net\majorkernelpanic\streaming\Stream.html
+* libstreaming\doc\net\majorkernelpanic\streaming\audio\
+* libstreaming\doc\net\majorkernelpanic\streaming\audio\AACStream.html
+* libstreaming\doc\net\majorkernelpanic\streaming\audio\AMRNBStream.html
+* libstreaming\doc\net\majorkernelpanic\streaming\audio\AudioQuality.html
+* libstreaming\doc\net\majorkernelpanic\streaming\audio\AudioStream.html
+* libstreaming\doc\net\majorkernelpanic\streaming\audio\package-frame.html
+* libstreaming\doc\net\majorkernelpanic\streaming\audio\package-summary.html
+* libstreaming\doc\net\majorkernelpanic\streaming\audio\package-tree.html
+* libstreaming\doc\net\majorkernelpanic\streaming\exceptions\
+* libstreaming\doc\net\majorkernelpanic\streaming\exceptions\CameraInUseException.html
+* libstreaming\doc\net\majorkernelpanic\streaming\exceptions\ConfNotSupportedException.html
+* libstreaming\doc\net\majorkernelpanic\streaming\exceptions\InvalidSurfaceException.html
+* libstreaming\doc\net\majorkernelpanic\streaming\exceptions\StorageUnavailableException.html
+* libstreaming\doc\net\majorkernelpanic\streaming\exceptions\package-frame.html
+* libstreaming\doc\net\majorkernelpanic\streaming\exceptions\package-summary.html
+* libstreaming\doc\net\majorkernelpanic\streaming\exceptions\package-tree.html
+* libstreaming\doc\net\majorkernelpanic\streaming\gl\
+* libstreaming\doc\net\majorkernelpanic\streaming\gl\SurfaceManager.html
+* libstreaming\doc\net\majorkernelpanic\streaming\gl\SurfaceView.ViewAspectRatioMeasurer.html
+* libstreaming\doc\net\majorkernelpanic\streaming\gl\SurfaceView.html
+* libstreaming\doc\net\majorkernelpanic\streaming\gl\TextureManager.html
+* libstreaming\doc\net\majorkernelpanic\streaming\gl\package-frame.html
+* libstreaming\doc\net\majorkernelpanic\streaming\gl\package-summary.html
+* libstreaming\doc\net\majorkernelpanic\streaming\gl\package-tree.html
+* libstreaming\doc\net\majorkernelpanic\streaming\hw\
+* libstreaming\doc\net\majorkernelpanic\streaming\hw\CodecManager.html
+* libstreaming\doc\net\majorkernelpanic\streaming\hw\EncoderDebugger.html
+* libstreaming\doc\net\majorkernelpanic\streaming\hw\NV21Convertor.html
+* libstreaming\doc\net\majorkernelpanic\streaming\hw\package-frame.html
+* libstreaming\doc\net\majorkernelpanic\streaming\hw\package-summary.html
+* libstreaming\doc\net\majorkernelpanic\streaming\hw\package-tree.html
+* libstreaming\doc\net\majorkernelpanic\streaming\mp4\
+* libstreaming\doc\net\majorkernelpanic\streaming\mp4\MP4Config.html
+* libstreaming\doc\net\majorkernelpanic\streaming\mp4\MP4Parser.html
+* libstreaming\doc\net\majorkernelpanic\streaming\mp4\package-frame.html
+* libstreaming\doc\net\majorkernelpanic\streaming\mp4\package-summary.html
+* libstreaming\doc\net\majorkernelpanic\streaming\mp4\package-tree.html
+* libstreaming\doc\net\majorkernelpanic\streaming\package-frame.html
+* libstreaming\doc\net\majorkernelpanic\streaming\package-summary.html
+* libstreaming\doc\net\majorkernelpanic\streaming\package-tree.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtcp\
+* libstreaming\doc\net\majorkernelpanic\streaming\rtcp\SenderReport.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtcp\package-frame.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtcp\package-summary.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtcp\package-tree.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtp\
+* libstreaming\doc\net\majorkernelpanic\streaming\rtp\AACADTSPacketizer.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtp\AACLATMPacketizer.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtp\AMRNBPacketizer.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtp\AbstractPacketizer.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtp\H263Packetizer.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtp\H264Packetizer.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtp\MediaCodecInputStream.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtp\RtpSocket.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtp\package-frame.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtp\package-summary.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtp\package-tree.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtsp\
+* libstreaming\doc\net\majorkernelpanic\streaming\rtsp\RtspClient.Callback.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtsp\RtspClient.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtsp\RtspServer.CallbackListener.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtsp\RtspServer.LocalBinder.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtsp\RtspServer.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtsp\UriParser.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtsp\package-frame.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtsp\package-summary.html
+* libstreaming\doc\net\majorkernelpanic\streaming\rtsp\package-tree.html
+* libstreaming\doc\net\majorkernelpanic\streaming\video\
+* libstreaming\doc\net\majorkernelpanic\streaming\video\CodecManager.html
+* libstreaming\doc\net\majorkernelpanic\streaming\video\H263Stream.html
+* libstreaming\doc\net\majorkernelpanic\streaming\video\H264Stream.html
+* libstreaming\doc\net\majorkernelpanic\streaming\video\VideoQuality.html
+* libstreaming\doc\net\majorkernelpanic\streaming\video\VideoStream.html
+* libstreaming\doc\net\majorkernelpanic\streaming\video\package-frame.html
+* libstreaming\doc\net\majorkernelpanic\streaming\video\package-summary.html
+* libstreaming\doc\net\majorkernelpanic\streaming\video\package-tree.html
+* libstreaming\doc\overview-frame.html
+* libstreaming\doc\overview-summary.html
+* libstreaming\doc\overview-tree.html
+* libstreaming\doc\package-list
+* libstreaming\doc\resources\
+* libstreaming\doc\resources\background.gif
+* libstreaming\doc\resources\tab.gif
+* libstreaming\doc\resources\titlebar.gif
+* libstreaming\doc\resources\titlebar_end.gif
+* libstreaming\doc\serialized-form.html
+* libstreaming\doc\stylesheet.css
+* libstreaming\libstreaming.iml
+* libstreaming\pom.xml
+* libstreaming\proguard-project.txt
+* libstreaming\project.properties
+* libstreaming\src\
+* libstreaming\src\net\
+* libstreaming\src\net\majorkernelpanic\
+* libstreaming\src\net\majorkernelpanic\streaming\
+* libstreaming\src\net\majorkernelpanic\streaming\MediaStream.java
+* libstreaming\src\net\majorkernelpanic\streaming\Session.java
+* libstreaming\src\net\majorkernelpanic\streaming\SessionBuilder.java
+* libstreaming\src\net\majorkernelpanic\streaming\Stream.java
+* libstreaming\src\net\majorkernelpanic\streaming\audio\
+* libstreaming\src\net\majorkernelpanic\streaming\audio\AACStream.java
+* libstreaming\src\net\majorkernelpanic\streaming\audio\AMRNBStream.java
+* libstreaming\src\net\majorkernelpanic\streaming\audio\AudioQuality.java
+* libstreaming\src\net\majorkernelpanic\streaming\audio\AudioStream.java
+* libstreaming\src\net\majorkernelpanic\streaming\exceptions\
+* libstreaming\src\net\majorkernelpanic\streaming\exceptions\CameraInUseException.java
+* libstreaming\src\net\majorkernelpanic\streaming\exceptions\ConfNotSupportedException.java
+* libstreaming\src\net\majorkernelpanic\streaming\exceptions\InvalidSurfaceException.java
+* libstreaming\src\net\majorkernelpanic\streaming\exceptions\StorageUnavailableException.java
+* libstreaming\src\net\majorkernelpanic\streaming\gl\
+* libstreaming\src\net\majorkernelpanic\streaming\gl\SurfaceManager.java
+* libstreaming\src\net\majorkernelpanic\streaming\gl\SurfaceView.java
+* libstreaming\src\net\majorkernelpanic\streaming\gl\TextureManager.java
+* libstreaming\src\net\majorkernelpanic\streaming\hw\
+* libstreaming\src\net\majorkernelpanic\streaming\hw\CodecManager.java
+* libstreaming\src\net\majorkernelpanic\streaming\hw\EncoderDebugger.java
+* libstreaming\src\net\majorkernelpanic\streaming\hw\NV21Convertor.java
+* libstreaming\src\net\majorkernelpanic\streaming\mp4\
+* libstreaming\src\net\majorkernelpanic\streaming\mp4\MP4Config.java
+* libstreaming\src\net\majorkernelpanic\streaming\mp4\MP4Parser.java
+* libstreaming\src\net\majorkernelpanic\streaming\rtcp\
+* libstreaming\src\net\majorkernelpanic\streaming\rtcp\SenderReport.java
+* libstreaming\src\net\majorkernelpanic\streaming\rtp\
+* libstreaming\src\net\majorkernelpanic\streaming\rtp\AACADTSPacketizer.java
+* libstreaming\src\net\majorkernelpanic\streaming\rtp\AACLATMPacketizer.java
+* libstreaming\src\net\majorkernelpanic\streaming\rtp\AMRNBPacketizer.java
+* libstreaming\src\net\majorkernelpanic\streaming\rtp\AbstractPacketizer.java
+* libstreaming\src\net\majorkernelpanic\streaming\rtp\H263Packetizer.java
+* libstreaming\src\net\majorkernelpanic\streaming\rtp\H264Packetizer.java
+* libstreaming\src\net\majorkernelpanic\streaming\rtp\MediaCodecInputStream.java
+* libstreaming\src\net\majorkernelpanic\streaming\rtp\RtpSocket.java
+* libstreaming\src\net\majorkernelpanic\streaming\rtsp\
+* libstreaming\src\net\majorkernelpanic\streaming\rtsp\RtcpDeinterleaver.java
+* libstreaming\src\net\majorkernelpanic\streaming\rtsp\RtspClient.java
+* libstreaming\src\net\majorkernelpanic\streaming\rtsp\RtspServer.java
+* libstreaming\src\net\majorkernelpanic\streaming\rtsp\UriParser.java
+* libstreaming\src\net\majorkernelpanic\streaming\video\
+* libstreaming\src\net\majorkernelpanic\streaming\video\CodecManager.java
+* libstreaming\src\net\majorkernelpanic\streaming\video\H263Stream.java
+* libstreaming\src\net\majorkernelpanic\streaming\video\H264Stream.java
+* libstreaming\src\net\majorkernelpanic\streaming\video\VideoQuality.java
+* libstreaming\src\net\majorkernelpanic\streaming\video\VideoStream.java
+* log_from_example_2.txt
+* proguard-project.txt
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:+
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app\src\main\AndroidManifest.xml
+* libs\armeabi-v7a\libiomx-gingerbread.so => app\src\main\jniLibs\armeabi-v7a\libiomx-gingerbread.so
+* libs\armeabi-v7a\libiomx-hc.so => app\src\main\jniLibs\armeabi-v7a\libiomx-hc.so
+* libs\armeabi-v7a\libiomx-ics.so => app\src\main\jniLibs\armeabi-v7a\libiomx-ics.so
+* libs\armeabi-v7a\libvlcjni.so => app\src\main\jniLibs\armeabi-v7a\libvlcjni.so
+* res\ => app\src\main\res\
+* src\ => app\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
