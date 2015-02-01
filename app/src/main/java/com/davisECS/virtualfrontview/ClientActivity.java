@@ -1,20 +1,8 @@
 package com.davisECS.virtualfrontview;
 
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-
-import org.videolan.libvlc.EventHandler;
-import org.videolan.libvlc.IVideoPlayer;
-import org.videolan.libvlc.LibVLC;
-import org.videolan.libvlc.Media;
-import org.videolan.libvlc.MediaList;
-
 import android.app.Activity;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Canvas;
 import android.graphics.PixelFormat;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnInfoListener;
@@ -27,14 +15,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import net.majorkernelpanic.streaming.SessionBuilder;
+import org.videolan.libvlc.EventHandler;
+import org.videolan.libvlc.IVideoPlayer;
+import org.videolan.libvlc.LibVLC;
+import org.videolan.libvlc.Media;
+import org.videolan.libvlc.MediaList;
+
+import java.lang.ref.WeakReference;
 
 public class ClientActivity extends Activity implements OnPreparedListener, OnErrorListener, OnInfoListener,
 		SurfaceHolder.Callback, IVideoPlayer {
@@ -69,6 +60,7 @@ public class ClientActivity extends Activity implements OnPreparedListener, OnEr
 
 		}
 	}
+
 
     @Override
 	public boolean onCreateOptionsMenu(Menu menu) {

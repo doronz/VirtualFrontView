@@ -28,9 +28,10 @@
     <string-array name="resolution_array">
         <item>176x144</item>
         <item>320x240</item>
-        <item>352x288</item>
-        <item>528x432</item>
-        <item>704x576</item>
+        <item>480x320</item>
+        <item>640x480</item>
+        <item>800x480</item>
+        <item>1280x720</item>
     </string-array>
 
 </resources>

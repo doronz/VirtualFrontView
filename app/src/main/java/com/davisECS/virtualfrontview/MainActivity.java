@@ -3,6 +3,7 @@ package com.davisECS.virtualfrontview;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.wifi.p2p.WifiP2pInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,11 +28,14 @@ public class MainActivity extends Activity {
 	private Spinner mResolutionSpinner;
 	private EditText mEnterIp;
 	private TextView mUserIp;
+    private TextView mGroupOwnerInfo;
 	private static String mVideoIP;
 	private static final String SERVER_IP = "server ip";
 	private static final String BITRATE = "bitrate";
 	private static final String RESOLUTION = "resolution";
-	
+
+    private WifiP2pInfo mWifiInfo;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,16 +47,35 @@ public class MainActivity extends Activity {
 		mVideoIP = "rtsp://" + ip + ":8988";
 		Log.i(TAG, "IP: " + mVideoIP);
 
+        mWifiInfo = new WifiP2pInfo();
+
 		mEnterIp = (EditText) findViewById(R.id.ip_text);
 		mUserIp = (TextView) findViewById(R.id.user_ip);
-		mEnterIp.setText("192.168.49.");
-		mUserIp.setText("Your IP: " + ip);
+        mGroupOwnerInfo = (TextView) findViewById(R.id.group_owner_info);
+
+        // Check if connected via Wifi-Direct
+        if (!mWifiInfo.groupFormed) {
+            mGroupOwnerInfo.setText("Not connected via WiFi direct! groupFormed = " + mWifiInfo.groupFormed);
+
+        } else {
+            // Check if group owner, otherwise get owner ip.
+            if (mWifiInfo.isGroupOwner) {
+                mGroupOwnerInfo.setText("You are the group owner!");
+            } else {
+                mWifiInfo.groupOwnerAddress.toString();
+                mEnterIp.setText(mWifiInfo.groupOwnerAddress.toString());
+            }
+        }
+        mUserIp.setText("Your IP: " + ip);
+
+
 		// Get button references
 		mServerButton = (Button) findViewById(R.id.server_button);
 		mClientButton = (Button) findViewById(R.id.client_button);
 		
 		mBitrateSpinner = (Spinner) findViewById(R.id.bitrate_spinner);
 		mResolutionSpinner = (Spinner) findViewById(R.id.resolution_spinner);
+
 
 		// Set what happens when buttons are clicked
 		mServerButton.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +109,7 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
+
 
 	@Override
 	protected void onPause() {

@@ -1,21 +1,20 @@
 package com.davisECS.virtualfrontview;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.SurfaceHolder;
+import android.view.WindowManager;
+import android.widget.Toast;
+
+import net.majorkernelpanic.streaming.MediaStream;
 import net.majorkernelpanic.streaming.Session;
 import net.majorkernelpanic.streaming.SessionBuilder;
 import net.majorkernelpanic.streaming.gl.SurfaceView;
 import net.majorkernelpanic.streaming.rtsp.RtspServer;
 import net.majorkernelpanic.streaming.video.VideoQuality;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences.Editor;
-import android.content.pm.ActivityInfo;
-import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.SurfaceHolder;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 public class ServerActivity extends Activity implements Session.Callback,
 		SurfaceHolder.Callback {
@@ -25,10 +24,7 @@ public class ServerActivity extends Activity implements Session.Callback,
 	private static final String RESOLUTION = "resolution";
 	
 	private SurfaceView mSurfaceView;
-
-	// For client video playback
-	MediaPlayer mediaPlayer;
-	SurfaceHolder surfaceHolder;
+    private Session mSession;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,35 +47,57 @@ public class ServerActivity extends Activity implements Session.Callback,
 			bitrate = 100000;
 
 		// Get resolution
+
 		String resolution = getIntent().getStringExtra(RESOLUTION);
-		int resX = 176;
-		int resY = 144;
+		int resX;
+		int resY;
+        // TODO: Should probably be a switch statement
 		if (resolution.equals("320x240")) {
             resX = 320;
             resY = 240;
-        } else if (resolution.equals("352x288")) {
-			resX = 352;
-			resY = 288;
-		} else if (resolution.equals("528x432")) {
-			resX = 528;
-			resY = 432;
-		} else if (resolution.equals("704x576")) {
-			resX = 704;
-			resY = 576;
+        } else if (resolution.equals("480x320")) {
+			resX = 480;
+			resY = 320;
+		} else if (resolution.equals("640x480")) {
+			resX = 640;
+			resY = 480;
+		} else if (resolution.equals("800x480")) {
+            resX = 800;
+            resY = 480;
+        } else if (resolution.equals("1280x720")) {
+            resX = 1280;
+            resY = 720;
 		} else {
 			resX = 176;
 			resY = 144;
 		}
 
+
 		Toast.makeText(this, "Resolution: " + resX + "x" + resY + ", Bitrate: "
 				+ bitrate, Toast.LENGTH_LONG).show();
 
-		// Configures the SessionBuilder
-		SessionBuilder.getInstance().setSurfaceView(mSurfaceView)
+        /*try {
+            RunAsRoot();
+        } catch (IOException e) {
+            Toast.makeText(this, "No root access.", Toast.LENGTH_LONG).show();
+            Log.d("VirtualFrontView", "No root.");
+        }*/
+
+        // Configures the session
+		mSession = SessionBuilder.getInstance().setSurfaceView(mSurfaceView)
 				.setPreviewOrientation(0).setContext(this)
 				.setVideoQuality(new VideoQuality(resX, resY, 20, bitrate))
 				.setAudioEncoder(SessionBuilder.AUDIO_NONE)
-				.setVideoEncoder(SessionBuilder.VIDEO_H264);
+				.setVideoEncoder(SessionBuilder.VIDEO_H264).build();
+
+        mSurfaceView.getHolder().addCallback(this);
+
+        // Force use of Media Codec API's Surface-to-buffer stream
+        mSession.getVideoTrack().setStreamingMethod(MediaStream.MODE_MEDIACODEC_API_2);
+
+
+
+
 		// Starts the RTSP server
 		getApplicationContext().startService(
 				new Intent(getApplicationContext(), RtspServer.class));
@@ -100,22 +118,25 @@ public class ServerActivity extends Activity implements Session.Callback,
 		finish();
 	}
 
+
+
+
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-
+        // Starts the preview of the Camera
+        //mSession.startPreview(); // Tends to start the preview before the camera is ready
 	}
 
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
+        // Stops the streaming session
+        mSession.stop();
 
 	}
 
@@ -139,8 +160,8 @@ public class ServerActivity extends Activity implements Session.Callback,
 
 	@Override
 	public void onSessionConfigured() {
-		// TODO Auto-generated method stub
 
+        mSession.start();
 	}
 
 	@Override
