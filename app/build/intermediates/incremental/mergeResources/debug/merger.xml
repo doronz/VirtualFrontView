@@ -1,201 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="2" >
-
-    <dataSet config="21.0.3" >
-        <source path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\res" />
-    </dataSet>
-    <dataSet config="main" >
-        <source path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res" >
-            <file
-                name="ic_launcher"
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\drawable-hdpi\ic_launcher.png"
-                qualifiers="hdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_launcher"
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\drawable-mdpi\ic_launcher.png"
-                qualifiers="mdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_launcher"
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\drawable-xhdpi\ic_launcher.png"
-                qualifiers="xhdpi-v4"
-                type="drawable" />
-            <file
-                name="ic_launcher"
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\drawable-xxhdpi\ic_launcher.png"
-                qualifiers="xxhdpi-v4"
-                type="drawable" />
-            <file
-                name="activity_client"
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\layout\activity_client.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="activity_main"
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\layout\activity_main.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="activity_server"
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\layout\activity_server.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="fragment_client"
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\layout\fragment_client.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="client"
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\menu\client.xml"
-                qualifiers=""
-                type="menu" />
-            <file
-                name="main"
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\menu\main.xml"
-                qualifiers=""
-                type="menu" />
-            <file
-                name="server"
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\menu\server.xml"
-                qualifiers=""
-                type="menu" />
-            <file
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\values\dimens.xml"
-                qualifiers="" >
-                <dimen name="activity_vertical_margin" >16dp
-                </dimen>
-                <dimen name="activity_horizontal_margin" >16dp
-                </dimen>
-            </file>
-            <file
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\values\strings.xml"
-                qualifiers="" >
-                <string name="hello_world" >Hello world!
-                </string>
-                <string name="title_activity_server" >ServerActivity
-                </string>
-                <string name="server_button" >Server
-                </string>
-                <string name="action_settings" >Setings
-                </string>
-                <string name="app_name" >VirtualFrontView
-                </string>
-                <string name="main_text" >Welcome to Virtual Front View, please choose Server if you would like to stream from your device, or type in the IP of the server and hit Client if you would like to receive a stream.
-                </string>
-                <string name="resolution_prompt" >Resolution
-                </string>
-                <string name="title_activity_client" >ClientActivity
-                </string>
-                <string name="start" >Start
-                </string>
-
-                <string-array name="resolution_array" >
-                    <item>
-176x144
-                    </item>
-                    <item>
-320x240
-                    </item>
-                    <item>
-352x288
-                    </item>
-                    <item>
-528x432
-                    </item>
-                    <item>
-704x576
-                    </item>
-                </string-array>
-
-                <string name="stop" >Stop
-                </string>
-                <string name="client_button" >Client
-                </string>
-                <string name="bitrate_prompt" >Bitrate
-                </string>
-
-                <string-array name="bitrate_array" >
-                    <item>
-100000
-                    </item>
-                    <item>
-250000
-                    </item>
-                    <item>
-500000
-                    </item>
-                    <item>
-512000
-                    </item>
-                    <item>
-1000000
-                    </item>
-                    <item>
-1500000
-                    </item>
-                    <item>
-2000000
-                    </item>
-                </string-array>
-            </file>
-            <file
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\values\styles.xml"
-                qualifiers="" >
-
-                <style
-                    name="AppTheme"
-                    parent="AppBaseTheme" >
-
-                    <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-                </style>
-
-                <style
-                    name="AppBaseTheme"
-                    parent="android:Theme.Light" >
-
-                    <!--
+<merger version="3"><dataSet config="21.0.3"><source path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\res"/></dataSet><dataSet config="main"><source path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res"><file name="ic_launcher" path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\drawable-hdpi\ic_launcher.png" qualifiers="hdpi-v4" type="drawable"/><file name="ic_launcher" path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\drawable-mdpi\ic_launcher.png" qualifiers="mdpi-v4" type="drawable"/><file name="ic_launcher" path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\drawable-xhdpi\ic_launcher.png" qualifiers="xhdpi-v4" type="drawable"/><file name="ic_launcher" path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\drawable-xxhdpi\ic_launcher.png" qualifiers="xxhdpi-v4" type="drawable"/><file name="activity_client" path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\layout\activity_client.xml" qualifiers="" type="layout"/><file name="activity_main" path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\layout\activity_main.xml" qualifiers="" type="layout"/><file name="activity_server" path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\layout\activity_server.xml" qualifiers="" type="layout"/><file name="fragment_client" path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\layout\fragment_client.xml" qualifiers="" type="layout"/><file name="client" path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\menu\client.xml" qualifiers="" type="menu"/><file name="main" path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\menu\main.xml" qualifiers="" type="menu"/><file name="server" path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\menu\server.xml" qualifiers="" type="menu"/><file path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\values\dimens.xml" qualifiers=""><dimen name="activity_vertical_margin">16dp</dimen><dimen name="activity_horizontal_margin">16dp</dimen></file><file path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\values\strings.xml" qualifiers=""><string name="hello_world">Hello world!</string><string name="title_activity_server">ServerActivity</string><string name="server_button">Server</string><string name="action_settings">Setings</string><string name="app_name">VirtualFrontView</string><string name="main_text">Welcome to Virtual Front View, please choose Server if you would like to stream from your device, or type in the IP of the server and hit Client if you would like to receive a stream.</string><string name="resolution_prompt">Resolution</string><string name="title_activity_client">ClientActivity</string><string name="start">Start</string><string-array name="resolution_array">
+        <item>176x144</item>
+        <item>320x240</item>
+        <item>480x320</item>
+        <item>640x480</item>
+        <item>800x480</item>
+        <item>1280x720</item>
+    </string-array><string name="stop">Stop</string><string name="client_button">Client</string><string name="group_owner">You are the group owner.</string><string name="bitrate_prompt">Bitrate</string><string-array name="bitrate_array">
+        <item>100000</item>
+        <item>250000</item>
+        <item>500000</item>
+        <item>512000</item>
+        <item>1000000</item>
+        <item>1500000</item>
+        <item>2000000</item>
+    </string-array></file><file path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\values\styles.xml" qualifiers=""><style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style><style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
-                    -->
-                </style>
-            </file>
-            <file
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\values-v11\styles.xml"
-                qualifiers="v11" >
-
-                <style
-                    name="AppBaseTheme"
-                    parent="android:Theme.Holo.Light" >
-
-                    <!-- API 11 theme customizations can go here. -->
-                </style>
-            </file>
-            <file
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\values-v14\styles.xml"
-                qualifiers="v14" >
-
-                <style
-                    name="AppBaseTheme"
-                    parent="android:Theme.Holo.Light.DarkActionBar" >
-
-                    <!-- API 14 theme customizations can go here. -->
-                </style>
-            </file>
-            <file
-                path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\values-w820dp\dimens.xml"
-                qualifiers="w820dp-v13" >
-                <dimen name="activity_horizontal_margin" >64dp
-                </dimen>
-            </file>
-        </source>
-        <source path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\build\generated\res\rs\debug" />
-        <source path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\build\generated\res\generated\debug" />
-    </dataSet>
-    <dataSet config="debug" >
-        <source path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\debug\res" />
-    </dataSet>
-
-</merger>
+        -->
+    </style></file><file path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\values-v11\styles.xml" qualifiers="v11"><style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+        <!-- API 11 theme customizations can go here. -->
+    </style></file><file path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\values-v14\styles.xml" qualifiers="v14"><style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- API 14 theme customizations can go here. -->
+    </style></file><file path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\main\res\values-w820dp\dimens.xml" qualifiers="w820dp-v13"><dimen name="activity_horizontal_margin">64dp</dimen></file></source><source path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\build\generated\res\rs\debug"/><source path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\build\generated\res\generated\debug"/></dataSet><dataSet config="debug"><source path="C:\Users\D\AndroidStudioProjects\VirtualFrontView\app\src\debug\res"/></dataSet><mergedItems/></merger>
