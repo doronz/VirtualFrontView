@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -22,15 +23,35 @@ public class ServerActivity extends Activity implements Session.Callback,
 	private final static String TAG = "VirtualFrontView";
 	private static final String BITRATE = "bitrate";
 	private static final String RESOLUTION = "resolution";
+
+    private static final int FPS = 30; // Highest recommended fps
 	
 	private SurfaceView mSurfaceView;
     private Session mSession;
+
+    private int mBitrate; // Video stream bitrate
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mSession.release();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    private int mResX; // Video stream resolution width
+    private int mResY; // Video stream resolution length
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_server);
-		//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        // Screen stays on while in this activity
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		mSurfaceView = (SurfaceView) findViewById(R.id.surface);
@@ -41,67 +62,68 @@ public class ServerActivity extends Activity implements Session.Callback,
 		editor.putString(RtspServer.KEY_PORT, String.valueOf(8988));
 		editor.commit();
 
-		// Get bitrate
-		int bitrate = Integer.valueOf(getIntent().getStringExtra(BITRATE));
-		if (bitrate < 100000)
-			bitrate = 100000;
+        // Handle user selected bitrate, resolution
+        updateBitrate();
+        updateResolution();
 
-		// Get resolution
-
-		String resolution = getIntent().getStringExtra(RESOLUTION);
-		int resX;
-		int resY;
-        // TODO: Should probably be a switch statement
-		if (resolution.equals("320x240")) {
-            resX = 320;
-            resY = 240;
-        } else if (resolution.equals("480x320")) {
-			resX = 480;
-			resY = 320;
-		} else if (resolution.equals("640x480")) {
-			resX = 640;
-			resY = 480;
-		} else if (resolution.equals("800x480")) {
-            resX = 800;
-            resY = 480;
-        } else if (resolution.equals("1280x720")) {
-            resX = 1280;
-            resY = 720;
-		} else {
-			resX = 176;
-			resY = 144;
-		}
-
-
-		Toast.makeText(this, "Resolution: " + resX + "x" + resY + ", Bitrate: "
-				+ bitrate, Toast.LENGTH_LONG).show();
-
-        /*try {
-            RunAsRoot();
-        } catch (IOException e) {
-            Toast.makeText(this, "No root access.", Toast.LENGTH_LONG).show();
-            Log.d("VirtualFrontView", "No root.");
-        }*/
 
         // Configures the session
-		mSession = SessionBuilder.getInstance().setSurfaceView(mSurfaceView)
-				.setPreviewOrientation(0).setContext(this)
-				.setVideoQuality(new VideoQuality(resX, resY, 20, bitrate))
+		mSession = SessionBuilder.getInstance()
+                .setCallback(this)
+                .setSurfaceView(mSurfaceView)
+				.setPreviewOrientation(0)
+                .setContext(this)
+				.setVideoQuality(new VideoQuality(mResX, mResY, FPS, mBitrate))
 				.setAudioEncoder(SessionBuilder.AUDIO_NONE)
-				.setVideoEncoder(SessionBuilder.VIDEO_H264).build();
+				.setVideoEncoder(SessionBuilder.VIDEO_H264)
+                .build();
 
         mSurfaceView.getHolder().addCallback(this);
 
         // Force use of Media Codec API's Surface-to-buffer stream
         mSession.getVideoTrack().setStreamingMethod(MediaStream.MODE_MEDIACODEC_API_2);
+        if (!mSession.isStreaming()) {
+            mSession.configure();
+        }
 
-
-
-
-		// Starts the RTSP server
-		getApplicationContext().startService(
-				new Intent(getApplicationContext(), RtspServer.class));
 	}
+
+    private void updateResolution(){
+
+        String resolution = getIntent().getStringExtra(RESOLUTION);
+        // This version of Java doesn't support switch(String)
+        if (resolution.equals("320x240")) {
+            mResX = 320;
+            mResY = 240;
+        } else if (resolution.equals("480x320")) {
+            mResX = 480;
+            mResY = 320;
+        } else if (resolution.equals("640x480")) {
+            mResX = 640;
+            mResY = 480;
+        } else if (resolution.equals("800x480")) {
+            mResX = 800;
+            mResY = 480;
+        } else if (resolution.equals("1280x720")) {
+            mResX = 1280;
+            mResY = 720;
+        } else {
+            mResX = 176;
+            mResY = 144;
+        }
+
+        Toast.makeText(this, "Resolution: " + mResX + "x" + mResY + ", Bitrate: "
+                + mBitrate, Toast.LENGTH_LONG).show();
+    }
+
+    // Retrieves user selected bitrate from main activity
+    private void updateBitrate(){
+        // Get bitrate
+        mBitrate = Integer.valueOf(getIntent().getStringExtra(BITRATE));
+        if (mBitrate < 100000)
+            mBitrate = 100000;
+    }
+
 
 	@Override
 	protected void onPause() {
@@ -124,7 +146,7 @@ public class ServerActivity extends Activity implements Session.Callback,
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
         // Starts the preview of the Camera
-        //mSession.startPreview(); // Tends to start the preview before the camera is ready
+        mSession.startPreview();
 	}
 
 	@Override
@@ -160,13 +182,13 @@ public class ServerActivity extends Activity implements Session.Callback,
 
 	@Override
 	public void onSessionConfigured() {
-
+        Log.d(TAG, "Streaming configured.");
         mSession.start();
 	}
 
 	@Override
 	public void onSessionStarted() {
-		// TODO Auto-generated method stub
+		Log.d(TAG, "Streaming started!");
 
 	}
 
