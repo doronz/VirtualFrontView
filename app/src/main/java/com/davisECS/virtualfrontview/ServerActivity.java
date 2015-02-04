@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import net.majorkernelpanic.streaming.MediaStream;
 import net.majorkernelpanic.streaming.Session;
 import net.majorkernelpanic.streaming.SessionBuilder;
 import net.majorkernelpanic.streaming.gl.SurfaceView;
@@ -27,14 +25,12 @@ public class ServerActivity extends Activity implements Session.Callback,
     private static final int FPS = 30; // Highest recommended fps
 	
 	private SurfaceView mSurfaceView;
-    private Session mSession;
 
     private int mBitrate; // Video stream bitrate
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mSession.release();
     }
 
     @Override
@@ -68,28 +64,27 @@ public class ServerActivity extends Activity implements Session.Callback,
 
 
         // Configures the session
-		mSession = SessionBuilder.getInstance()
+		SessionBuilder.getInstance()
                 .setCallback(this)
                 .setSurfaceView(mSurfaceView)
 				.setPreviewOrientation(0)
                 .setContext(this)
 				.setVideoQuality(new VideoQuality(mResX, mResY, FPS, mBitrate))
 				.setAudioEncoder(SessionBuilder.AUDIO_NONE)
-				.setVideoEncoder(SessionBuilder.VIDEO_H264)
-                .build();
+				.setVideoEncoder(SessionBuilder.VIDEO_H264);
 
-        mSurfaceView.getHolder().addCallback(this);
+        // Starts the RTSP server
+        this.startService(new Intent(this,RtspServer.class));
+
 
         // Force use of Media Codec API's Surface-to-buffer stream
-        mSession.getVideoTrack().setStreamingMethod(MediaStream.MODE_MEDIACODEC_API_2);
-        if (!mSession.isStreaming()) {
-            mSession.configure();
-        }
+        //mSession.getVideoTrack().setStreamingMethod(MediaStream.MODE_MEDIACODEC_API_2); // Doesn't seem to work
+        // Force use of Media Codec API Buffer-to-buffer stream
+        //mSession.getVideoTrack().setStreamingMethod(MediaStream.MODE_MEDIACODEC_API);
 
 	}
 
     private void updateResolution(){
-
         String resolution = getIntent().getStringExtra(RESOLUTION);
         // This version of Java doesn't support switch(String)
         if (resolution.equals("320x240")) {
@@ -145,8 +140,7 @@ public class ServerActivity extends Activity implements Session.Callback,
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-        // Starts the preview of the Camera
-        mSession.startPreview();
+
 	}
 
 	@Override
@@ -157,8 +151,7 @@ public class ServerActivity extends Activity implements Session.Callback,
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-        // Stops the streaming session
-        mSession.stop();
+
 
 	}
 
@@ -182,13 +175,12 @@ public class ServerActivity extends Activity implements Session.Callback,
 
 	@Override
 	public void onSessionConfigured() {
-        Log.d(TAG, "Streaming configured.");
-        mSession.start();
+
 	}
 
 	@Override
 	public void onSessionStarted() {
-		Log.d(TAG, "Streaming started!");
+
 
 	}
 

@@ -55,7 +55,7 @@ public class ClientActivity extends Activity implements OnPreparedListener, OnEr
 		mSurfaceView = (SurfaceView) findViewById(R.id.surface_view);
 		mSurfaceHolder = mSurfaceView.getHolder();
 		mSurfaceHolder.addCallback(this);
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		if (savedInstanceState == null) {
 
 		}
@@ -81,23 +81,6 @@ public class ClientActivity extends Activity implements OnPreparedListener, OnEr
 
 	@Override
 	protected void onResume() {
-//		// Create a new media player and set the listeners
-//		mMediaPlayer = new MediaPlayer();
-//		
-//		try {
-//			mMediaPlayer.setDataSource("rtsp://" + mVideoIP
-//					+ ":8988");
-//		} catch (IllegalArgumentException | SecurityException
-//				| IllegalStateException | IOException e) {
-//			e.printStackTrace();
-//			Log.e(TAG, "MediaPlayer error!");
-//		}
-//		// mMediaPlayer.setDisplay(holder);
-//		mMediaPlayer.setScreenOnWhilePlaying(true);
-//		mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//		mMediaPlayer.prepareAsync();
-//		mMediaPlayer.setOnPreparedListener(this);
-
 		super.onResume();
         try
         {
@@ -112,11 +95,6 @@ public class ClientActivity extends Activity implements OnPreparedListener, OnEr
 	@Override
 	protected void onPause() {
 		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		/*if (mMediaPlayer != null) {
-
-			mMediaPlayer.release();
-			mMediaPlayer = null;
-		}*/
 		super.onPause();
         try
         {
@@ -153,27 +131,7 @@ public class ClientActivity extends Activity implements OnPreparedListener, OnEr
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-        /*try {
-			mMediaPlayer = new MediaPlayer();
-			mMediaPlayer.setDisplay(mSurfaceHolder);
-			mMediaPlayer.setDataSource("rtsp://" + mVideoIP
-					+ ":8988");
-			mMediaPlayer.prepare();
-			mMediaPlayer.setOnPreparedListener(this);
-			mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-			mMediaPlayer.setScreenOnWhilePlaying(true);
-			mMediaPlayer.setOnErrorListener(this);
-			mMediaPlayer.setOnInfoListener(this);
-			mTimeStarted = System.currentTimeMillis();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-            e.printStackTrace();
-        }*/
+
 	}
 
 	@Override
