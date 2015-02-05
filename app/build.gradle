@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 21
     buildToolsVersion "20.0.0"
 
     defaultConfig {
         applicationId "com.davisECS.virtualfrontview"
-        minSdkVersion 14
-        targetSdkVersion 19
+        minSdkVersion 16
+        targetSdkVersion 21
     }
 
     buildTypes {

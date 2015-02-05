@@ -20,6 +20,7 @@
 
 package net.majorkernelpanic.streaming.hw;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.ByteBuffer;
@@ -525,8 +526,12 @@ public class EncoderDebugger {
 	 * Instantiates and starts the encoder.
 	 */
 	private void configureEncoder()  {
-		mEncoder = MediaCodec.createByCodecName(mEncoderName);
-		MediaFormat mediaFormat = MediaFormat.createVideoFormat(MIME_TYPE, mWidth, mHeight);
+        try {
+            mEncoder = MediaCodec.createByCodecName(mEncoderName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        MediaFormat mediaFormat = MediaFormat.createVideoFormat(MIME_TYPE, mWidth, mHeight);
 		mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, BITRATE);
 		mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, FRAMERATE);	
 		mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, mEncoderColorFormat);
@@ -558,8 +563,12 @@ public class EncoderDebugger {
 		csd0.put(new byte[] {0x00,0x00,0x00,0x01});
 		csd0.put(mPPS);
 
-		mDecoder = MediaCodec.createByCodecName(mDecoderName);
-		MediaFormat mediaFormat = MediaFormat.createVideoFormat(MIME_TYPE, mWidth, mHeight);
+        try {
+            mDecoder = MediaCodec.createByCodecName(mDecoderName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        MediaFormat mediaFormat = MediaFormat.createVideoFormat(MIME_TYPE, mWidth, mHeight);
 		mediaFormat.setByteBuffer("csd-0", csd0);
 		mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, mDecoderColorFormat);
 		mDecoder.configure(mediaFormat, null, null, 0);
