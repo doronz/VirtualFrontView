@@ -29,15 +29,21 @@
     <string name="app_name">VirtualFrontView</string>
     <string name="bitrate_prompt">Bitrate</string>
     <string name="client_button">Client</string>
+    <string name="discovery_status_text">Discovery status:</string>
     <string name="group_owner">You are the group owner.</string>
     <string name="hello_world">Hello world!</string>
-    <string name="main_text">Welcome to Virtual Front View, please choose Server if you would like to stream from your device, or type in the IP of the server and hit Client if you would like to receive a stream.</string>
+    <string name="main_text">Welcome to Virtual Front View</string>
     <string name="resolution_prompt">Resolution</string>
     <string name="server_button">Server</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
+    <string name="stop_discovery_text">Stop Discovery</string>
     <string name="title_activity_client">ClientActivity</string>
     <string name="title_activity_server">ServerActivity</string>
+    <string name="update_ip_text">Update IP</string>
+    <string name="wifi_connect_text">Connect</string>
+    <string name="wifi_discoverable_text">Start Discovery</string>
+    <string name="wifi_status_text">Connection status:</string>
     <!-- From: file:/C:/Users/D/AndroidStudioProjects/VirtualFrontView/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Light">

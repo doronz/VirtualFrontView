@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    android:color="@android:color/background_light" >
+    android:color="@android:color/background_light">
 
     <TextView
         android:id="@+id/main_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
+        android:layout_gravity="top|center"
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="@string/main_text"
@@ -21,35 +21,72 @@
         android:layout_height="0dip"
         android:layout_weight="1"
         android:gravity="bottom"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/group_owner_info"
+        <Button
+            android:id="@+id/stop_discovery_button"
+            android:text="@string/stop_discovery_text"
             android:layout_gravity="center"
-            android:textSize="18sp"
+            android:enabled="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <Button
+            android:id="@+id/wifi_discoverable_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wifi_discoverable_text"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/wifi_connect_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wifi_connect_text"
+            android:layout_gravity="center"
+            android:enabled="false" />
+
         <TextView
-            android:id="@+id/user_ip"
+            android:id="@+id/wifi_status_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wifi_status_text"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/discovery_status_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/discovery_status_text"
+            android:layout_gravity="center" />
+        <TextView
+            android:id="@+id/info_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@android:color/holo_purple"/>
+
+        <TextView
+            android:id="@+id/group_owner_ip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
+            android:textColor="@android:color/holo_orange_dark"
             android:gravity="center"
             android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <Spinner
                 android:id="@+id/bitrate_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:entries="@array/bitrate_array"
-                android:prompt="@string/bitrate_prompt" 
-                android:visibility="visible"/>
+                android:prompt="@string/bitrate_prompt"
+                android:visibility="visible" />
 
             <Spinner
                 android:id="@+id/resolution_spinner"
@@ -70,7 +107,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/ip_text"
