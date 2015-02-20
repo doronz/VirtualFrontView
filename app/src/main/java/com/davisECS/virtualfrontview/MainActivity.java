@@ -117,16 +117,16 @@ public class MainActivity extends Activity implements ChoosePeerDialogFragment.C
         // Tell intent filter to listen to appropriate Wi-Fi states
         configureIntentFilter();
 
-/*
-        // Display device IP
-        String ip = IpUtility.getIPAddress(true);*/
-
         // Wire up the buttons and spinners
         initButtons();
 
         mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         mChannel = mManager.initialize(this, getMainLooper(), null);
 
+        // Attempt to get root privileges
+        if(!Shell.su()) {
+            makeToast("NO ROOT!");
+        }
 	}
 
     @Override
@@ -210,12 +210,12 @@ public class MainActivity extends Activity implements ChoosePeerDialogFragment.C
                     @Override
                     public void onSuccess() {
                         mIsDiscovering = false;
-                        setDiscoveryStatus("Discovery stopped.");
+                        setDiscoveryStatus("Discovery stopped.", false);
                     }
 
                     @Override
                     public void onFailure(int reason) {
-                        setDiscoveryStatus("Unable to stop discovery.");
+                        setDiscoveryStatus("Unable to stop discovery.", true);
                     }
                 });
             }
@@ -273,8 +273,9 @@ public class MainActivity extends Activity implements ChoosePeerDialogFragment.C
         }
     }
 
-    public void setDiscoveryStatus(String status){
+    public void setDiscoveryStatus(String status, boolean enableStopDiscovery){
         mDiscoveryText.setText("Discovery Status: " + status);
+        mStopDiscoveryButton.setEnabled(enableStopDiscovery);
     }
 
     public void setInfo(String info){

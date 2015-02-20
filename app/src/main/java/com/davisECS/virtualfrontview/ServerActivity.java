@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
+import android.widget.Chronometer;
 import android.widget.Toast;
 
 import net.majorkernelpanic.streaming.Session;
@@ -25,6 +26,7 @@ public class ServerActivity extends Activity implements Session.Callback,
     private static final int FPS = 30; // Highest recommended fps
 	
 	private SurfaceView mSurfaceView;
+    private Chronometer mChrono;
 
     private int mBitrate; // Video stream bitrate
 
@@ -51,6 +53,8 @@ public class ServerActivity extends Activity implements Session.Callback,
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		mSurfaceView = (SurfaceView) findViewById(R.id.surface);
+        mChrono = (Chronometer) findViewById(R.id.chrono);
+        mChrono.setFormat("SS");
 
 		// Sets the port of the RTSP server to 8988
 		Editor editor = PreferenceManager.getDefaultSharedPreferences(
@@ -75,7 +79,8 @@ public class ServerActivity extends Activity implements Session.Callback,
 
         // Starts the RTSP server
         this.startService(new Intent(this,RtspServer.class));
-
+        TestResults.RunTest("start", "sender");
+        mChrono.start();
 
         // Force use of Media Codec API's Surface-to-buffer stream
         //mSession.getVideoTrack().setStreamingMethod(MediaStream.MODE_MEDIACODEC_API_2); // Doesn't seem to work
@@ -126,7 +131,8 @@ public class ServerActivity extends Activity implements Session.Callback,
 		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		// Stop RTSP server if it is running
 		getApplicationContext().stopService(new Intent(this, RtspServer.class));
-
+        TestResults.RunTest("stop", "sender");
+        mChrono.stop();
 	}
 
 	@Override
@@ -157,13 +163,11 @@ public class ServerActivity extends Activity implements Session.Callback,
 
 	@Override
 	public void onBitrareUpdate(long bitrate) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onSessionError(int reason, int streamType, Exception e) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -181,12 +185,10 @@ public class ServerActivity extends Activity implements Session.Callback,
 	@Override
 	public void onSessionStarted() {
 
-
 	}
 
 	@Override
 	public void onSessionStopped() {
-		// TODO Auto-generated method stub
 
 	}
 

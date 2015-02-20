@@ -3,20 +3,16 @@ package com.davisECS.virtualfrontview;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnErrorListener;
-import android.media.MediaPlayer.OnInfoListener;
-import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Chronometer;
 import android.widget.Toast;
 
 import org.videolan.libvlc.EventHandler;
@@ -27,13 +23,11 @@ import org.videolan.libvlc.MediaList;
 
 import java.lang.ref.WeakReference;
 
-public class ClientActivity extends Activity implements OnPreparedListener, OnErrorListener, OnInfoListener,
-		SurfaceHolder.Callback, IVideoPlayer {
-
-	MediaPlayer mMediaPlayer;
+public class ClientActivity extends Activity implements SurfaceHolder.Callback, IVideoPlayer {
 
 	SurfaceHolder mSurfaceHolder;
 	SurfaceView mSurfaceView;
+    private Chronometer mChrono;
 
     //VLC Player
     private LibVLC libvlc;
@@ -44,23 +38,25 @@ public class ClientActivity extends Activity implements OnPreparedListener, OnEr
     private static String mVideoIP = "";
 	private static final String TAG = "VirtualFrontView";
 	private static final String SERVER_IP = "server ip";
-	private static long mTimeStarted;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_client);
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
 		mVideoIP = getIntent().getStringExtra(SERVER_IP);
 		mSurfaceView = (SurfaceView) findViewById(R.id.surface_view);
 		mSurfaceHolder = mSurfaceView.getHolder();
 		mSurfaceHolder.addCallback(this);
+        mChrono = (Chronometer) findViewById(R.id.chrono);
+        mChrono.setFormat("SS");
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		if (savedInstanceState == null) {
 
 		}
 	}
-
 
     @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -94,8 +90,8 @@ public class ClientActivity extends Activity implements OnPreparedListener, OnEr
 
 	@Override
 	protected void onPause() {
+        super.onPause();
 		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		super.onPause();
         try
         {
             releasePlayer();
@@ -118,16 +114,8 @@ public class ClientActivity extends Activity implements OnPreparedListener, OnEr
         {
 
         }
-		finish();
 	}
 
-
-	@Override
-	public void onPrepared(MediaPlayer mp) {
-		Log.d(TAG, "Media started!");
-		mMediaPlayer.start();
-
-	}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
@@ -137,31 +125,14 @@ public class ClientActivity extends Activity implements OnPreparedListener, OnEr
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-        if (libvlc != null)
+        if (libvlc != null) {
             libvlc.attachSurface(mSurfaceHolder.getSurface(), this);
+        }
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 
-	}
-
-	@Override
-	public boolean onError(MediaPlayer mp, int what, int extra) {
-		// TODO Auto-generated method stub
-		finish();
-		return false;
-	}
-
-	@Override
-	public boolean onInfo(MediaPlayer mp, int what, int extra) {
-		// TODO Auto-generated method stub
-		long timeEnded = System.currentTimeMillis();
-		if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
-			if (timeEnded - mTimeStarted >= 2500)
-				finish();
-		}
-		return false;
 	}
 
     private void createPlayer(String serverip) {
@@ -191,6 +162,8 @@ public class ClientActivity extends Activity implements OnPreparedListener, OnEr
             list.clear();
             list.add(new Media(libvlc, LibVLC.PathToURI("rtsp://" + serverip + ":8988")), false);
             libvlc.playIndex(0);
+            TestResults.RunTest("start", "receiver");
+            mChrono.start();
         } catch (Exception e) {
             Toast.makeText(this, "Error creating player!", Toast.LENGTH_LONG).show();
         }
@@ -209,6 +182,8 @@ public class ClientActivity extends Activity implements OnPreparedListener, OnEr
 
         mVideoWidth = 0;
         mVideoHeight = 0;
+        TestResults.RunTest("stop", "receiver");
+        mChrono.stop();
     }
 
     private void setSize(int width, int height) {

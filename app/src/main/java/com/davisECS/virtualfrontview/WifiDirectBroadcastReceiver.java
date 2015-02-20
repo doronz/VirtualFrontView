@@ -41,10 +41,9 @@ public class WifiDirectBroadcastReceiver extends android.content.BroadcastReceiv
             }
         } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
             // The peer list has changed.
-            mActivity.setDiscoveryStatus("Peers updated.");
-/*            if (mManager != null) {
-                mManager.requestPeers(mChannel, mPeerListener);
-            }*/
+            mActivity.setDiscoveryStatus("Peers updated.", true);
+            //TODO : Need to fix stop discovery button.
+
 
 
         } else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) {
@@ -68,9 +67,10 @@ public class WifiDirectBroadcastReceiver extends android.content.BroadcastReceiv
             // Peer discovery stopped or started
             int discovery = intent.getIntExtra(WifiP2pManager.EXTRA_DISCOVERY_STATE, -1);
             if (discovery == WifiP2pManager.WIFI_P2P_DISCOVERY_STARTED)
-                mActivity.setDiscoveryStatus("Peer discovery started.");
+                mActivity.setDiscoveryStatus("Peer discovery started.", true);
             else if (discovery == WifiP2pManager.WIFI_P2P_DISCOVERY_STOPPED)
-                mActivity.setDiscoveryStatus("Peer discovery stopped.");
+                mActivity.setDiscoveryStatus("Peer discovery stopped.", false);
+
         }
     }
 }

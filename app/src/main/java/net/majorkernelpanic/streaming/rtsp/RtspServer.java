@@ -20,6 +20,19 @@
 
 package net.majorkernelpanic.streaming.rtsp;
 
+import android.app.Service;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.Binder;
+import android.os.IBinder;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
+import net.majorkernelpanic.streaming.Session;
+import net.majorkernelpanic.streaming.SessionBuilder;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -35,18 +48,6 @@ import java.util.Locale;
 import java.util.WeakHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import net.majorkernelpanic.streaming.Session;
-import net.majorkernelpanic.streaming.SessionBuilder;
-import android.app.Service;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.os.Binder;
-import android.os.IBinder;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
 /**
  * Implementation of a subset of the RTSP protocol (RFC 2326).
@@ -376,7 +377,7 @@ public class RtspServer extends Service {
 				try {
 					request = Request.parseRequest(mInput);
 				} catch (SocketException e) {
-					// Client has left
+					// Client has left... So we record the packets.
 					break;
 				} catch (Exception e) {
 					// We don't understand the request :/
