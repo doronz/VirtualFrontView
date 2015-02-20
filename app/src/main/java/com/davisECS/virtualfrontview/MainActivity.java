@@ -47,6 +47,7 @@ public class MainActivity extends Activity implements ChoosePeerDialogFragment.C
 	private Spinner mResolutionSpinner;
 
     private EditText mEnterIp;
+    private EditText mEnterDistance;
 
     private TextView mGroupOwnerIp;
     private TextView mWifiStatusText;
@@ -56,6 +57,7 @@ public class MainActivity extends Activity implements ChoosePeerDialogFragment.C
 	private static final String SERVER_IP = "server ip";
 	private static final String BITRATE = "bitrate";
 	private static final String RESOLUTION = "resolution";
+    private static final String DISTANCE = "distance";
 
     // Wifi-Direct P2P stuff
     private WifiP2pInfo mWifiInfo;
@@ -79,7 +81,8 @@ public class MainActivity extends Activity implements ChoosePeerDialogFragment.C
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // Get references to XML objects
-		mEnterIp = (EditText) findViewById(R.id.ip_text);
+		mEnterIp = (EditText) findViewById(R.id.edit_IP);
+        mEnterDistance = (EditText) findViewById(R.id.edit_distance);
 
         mGroupOwnerIp       = (TextView) findViewById(R.id.group_owner_ip);
         mWifiStatusText     = (TextView) findViewById(R.id.wifi_status_text);
@@ -155,6 +158,7 @@ public class MainActivity extends Activity implements ChoosePeerDialogFragment.C
                         ServerActivity.class);
                 launchServer.putExtra(BITRATE, (String) mBitrateSpinner.getSelectedItem());
                 launchServer.putExtra(RESOLUTION, (String) mResolutionSpinner.getSelectedItem());
+                launchServer.putExtra(DISTANCE, mEnterDistance.getText().toString());
                 startActivity(launchServer);
             }
         });
@@ -169,7 +173,13 @@ public class MainActivity extends Activity implements ChoosePeerDialogFragment.C
                     Intent launchClient = new Intent(MainActivity.this,
                             ClientActivity.class);
                     launchClient.putExtra(SERVER_IP, ip);
-                    startActivity(launchClient);
+                    launchClient.putExtra(DISTANCE, mEnterDistance.getText().toString());
+                    if (mEnterDistance.getText().toString().isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "Please enter a distance.",
+                                Toast.LENGTH_LONG).show();
+                    }else {
+                        startActivity(launchClient);
+                    }
                 }
             }
         });

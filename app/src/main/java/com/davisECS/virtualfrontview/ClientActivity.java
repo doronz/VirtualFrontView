@@ -28,6 +28,7 @@ public class ClientActivity extends Activity implements SurfaceHolder.Callback, 
 	SurfaceHolder mSurfaceHolder;
 	SurfaceView mSurfaceView;
     private Chronometer mChrono;
+    private String mDistance;
 
     //VLC Player
     private LibVLC libvlc;
@@ -38,6 +39,7 @@ public class ClientActivity extends Activity implements SurfaceHolder.Callback, 
     private static String mVideoIP = "";
 	private static final String TAG = "VirtualFrontView";
 	private static final String SERVER_IP = "server ip";
+    private static final String DISTANCE = "distance";
 
 
 	@Override
@@ -46,6 +48,10 @@ public class ClientActivity extends Activity implements SurfaceHolder.Callback, 
 		setContentView(R.layout.activity_client);
 
 		mVideoIP = getIntent().getStringExtra(SERVER_IP);
+
+        // Get distance for tests
+        mDistance = getIntent().getStringExtra(DISTANCE);
+
 		mSurfaceView = (SurfaceView) findViewById(R.id.surface_view);
 		mSurfaceHolder = mSurfaceView.getHolder();
 		mSurfaceHolder.addCallback(this);
@@ -182,7 +188,7 @@ public class ClientActivity extends Activity implements SurfaceHolder.Callback, 
 
         mVideoWidth = 0;
         mVideoHeight = 0;
-        TestResults.RunTest("stop", "receiver");
+        TestResults.RunTest("stop", "receiver", mDistance);
         mChrono.stop();
     }
 

@@ -53,9 +53,9 @@ public class TestResults {
             }
             else if (params[0].equalsIgnoreCase("stop")) {
                 if (params[1].equalsIgnoreCase("sender")) {
-                    recordPackets(true);
+                    recordPackets(true, params[2]);
                 } else {
-                    recordPackets(false);
+                    recordPackets(false, params[2]);
                 }
             }
             return null;
@@ -106,7 +106,7 @@ public class TestResults {
      * was supposed to receive.
      * @param sender set to true if you want to get the transmitted packets, false if you want received
      */
-    private static void recordPackets(boolean sender){
+    private static void recordPackets(boolean sender, String distance){
         if (isExternalStorageWritable()) {
             try {
                 String output;
@@ -136,7 +136,7 @@ public class TestResults {
                 String[] fileOutput = new String[2];
                 fileOutput[0] = String.valueOf(new Timestamp(System.currentTimeMillis()));
                 fileOutput[1] = String.valueOf(mPacketsSent);
-                recordResults(fileOutput, sender);
+                recordResults(fileOutput, sender, distance);
             } catch (Shell.ShellException e) {
                 e.printStackTrace();
             }
@@ -157,8 +157,7 @@ public class TestResults {
      * @param result
      * @param sender set to true if you want to get the transmitted packets, false if you want received
      */
-    private static void recordResults(String[] result, boolean sender) {
-        Log.d(TAG, "RECORDING RESULTS");
+    private static void recordResults(String[] result, boolean sender, String distance) {
         File root = android.os.Environment.getExternalStorageDirectory();
         File dir = new File(root.getAbsolutePath() + "/VirtualFrontView");
         dir.mkdirs();
@@ -171,13 +170,13 @@ public class TestResults {
             else
                 file = new File(dir, "Received (" + sdf.format(date) + ").csv");
             FileWriter writer = new FileWriter(file, true);
-            writer.append(result[0] + "," + result[1] + '\n');
+            writer.append(result[0] + "," + result[1] + "," + distance + '\n');
             writer.close();
-            Log.i(TAG, "WROTE TO FILE!!!");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

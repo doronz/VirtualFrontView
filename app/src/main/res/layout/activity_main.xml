@@ -76,7 +76,7 @@
             android:textSize="18sp" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -95,6 +95,15 @@
                 android:entries="@array/resolution_array"
                 android:prompt="@string/resolution_prompt"
                 android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/edit_distance"
+                android:inputType="number"
+                android:text="0"
+                android:hint="Enter Distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
 
         <Button
@@ -110,7 +119,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/ip_text"
+                android:id="@+id/edit_IP"
                 android:layout_width="244dp"
                 android:layout_height="wrap_content"
                 android:ems="10"

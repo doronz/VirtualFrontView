@@ -22,6 +22,9 @@ public class ServerActivity extends Activity implements Session.Callback,
 	private final static String TAG = "VirtualFrontView";
 	private static final String BITRATE = "bitrate";
 	private static final String RESOLUTION = "resolution";
+    private static final String DISTANCE = "distance";
+
+    private String mDistance;
 
     private static final int FPS = 30; // Highest recommended fps
 	
@@ -66,6 +69,8 @@ public class ServerActivity extends Activity implements Session.Callback,
         updateBitrate();
         updateResolution();
 
+        // Get distance for tests
+        mDistance = getIntent().getStringExtra(DISTANCE);
 
         // Configures the session
 		SessionBuilder.getInstance()
@@ -131,7 +136,7 @@ public class ServerActivity extends Activity implements Session.Callback,
 		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		// Stop RTSP server if it is running
 		getApplicationContext().stopService(new Intent(this, RtspServer.class));
-        TestResults.RunTest("stop", "sender");
+        TestResults.RunTest("stop", "sender", mDistance);
         mChrono.stop();
 	}
 
