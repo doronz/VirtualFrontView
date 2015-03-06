@@ -125,11 +125,18 @@
                 android:ems="10"
                 android:gravity="center_vertical"
                 android:hint="Enter source IP..."
+                android:visibility="gone"
                 android:textSize="24sp" />
-
+            <Button
+                android:id="@+id/latency_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="fill_parent"
+                android:text="@string/latency_button" />
             <Button
                 android:id="@+id/client_button"
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="fill_parent"
                 android:text="@string/client_button" />
         </LinearLayout>

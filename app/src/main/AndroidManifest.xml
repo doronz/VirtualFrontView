@@ -16,11 +16,15 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
 
     <application
         android:allowBackup="true"
@@ -28,9 +32,9 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.davisECS.virtualfrontview.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,15 +45,19 @@
         <service android:name="net.majorkernelpanic.streaming.rtsp.RtspServer" />
 
         <activity
-            android:name="com.davisECS.virtualfrontview.ServerActivity"
+            android:name=".ServerActivity"
             android:label="@string/title_activity_server"
             android:screenOrientation="landscape" >
-            
         </activity>
         <activity
-            android:name="com.davisECS.virtualfrontview.ClientActivity"
+            android:name=".ClientActivity"
             android:label="@string/title_activity_client"
             android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".ClientLatencyActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_client_latency" >
         </activity>
     </application>
 

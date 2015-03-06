@@ -39,6 +39,7 @@ public class MainActivity extends Activity implements ChoosePeerDialogFragment.C
 
 	private static Button mServerButton;
 	private static Button mClientButton;
+    private static Button mLatencyButton;
     private static Button mConnectButton;
     private static Button mStartDiscoveryButton;
     private static Button mStopDiscoveryButton;
@@ -91,6 +92,7 @@ public class MainActivity extends Activity implements ChoosePeerDialogFragment.C
 
         mServerButton           = (Button) findViewById(R.id.server_button);
         mClientButton           = (Button) findViewById(R.id.client_button);
+        mLatencyButton          = (Button) findViewById(R.id.latency_button);
         mConnectButton          = (Button) findViewById(R.id.wifi_connect_button);
         mStartDiscoveryButton   = (Button) findViewById(R.id.wifi_discoverable_button);
         mStopDiscoveryButton    = (Button) findViewById(R.id.stop_discovery_button);
@@ -163,7 +165,6 @@ public class MainActivity extends Activity implements ChoosePeerDialogFragment.C
             }
         });
         mClientButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 String ip = mEnterIp.getText().toString();
@@ -183,6 +184,27 @@ public class MainActivity extends Activity implements ChoosePeerDialogFragment.C
                 }
             }
         });
+        mLatencyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String ip = mEnterIp.getText().toString();
+                if (ip.length() < 7) // Not really validating input too strictly..
+                    makeToast(getApplicationContext(),"Please enter a valid IP!" );
+                else {
+                    Intent launchLatency = new Intent(MainActivity.this,
+                            ClientLatencyActivity.class);
+                    launchLatency.putExtra(SERVER_IP, ip);
+                    launchLatency.putExtra(DISTANCE, mEnterDistance.getText().toString());
+                    if (mEnterDistance.getText().toString().isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "Please enter a distance.",
+                                Toast.LENGTH_LONG).show();
+                    }else {
+                        startActivity(launchLatency);
+                    }
+                }
+            }
+        });
+
         mConnectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -56,7 +56,6 @@ public class ClientActivity extends Activity implements SurfaceHolder.Callback, 
 		mSurfaceHolder = mSurfaceView.getHolder();
 		mSurfaceHolder.addCallback(this);
         mChrono = (Chronometer) findViewById(R.id.chrono);
-        mChrono.setFormat("SS");
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		if (savedInstanceState == null) {

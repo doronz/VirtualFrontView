@@ -40,5 +40,7 @@
         <item>800x480</item>
         <item>1280x720</item>
     </string-array>
+    <string name="title_activity_client_latency">ClientLatencyActivity</string>
+    <string name="latency_button">Latency</string>
 
 </resources>

@@ -57,7 +57,6 @@ public class ServerActivity extends Activity implements Session.Callback,
 
 		mSurfaceView = (SurfaceView) findViewById(R.id.surface);
         mChrono = (Chronometer) findViewById(R.id.chrono);
-        mChrono.setFormat("SS");
 
 		// Sets the port of the RTSP server to 8988
 		Editor editor = PreferenceManager.getDefaultSharedPreferences(
@@ -167,7 +166,7 @@ public class ServerActivity extends Activity implements Session.Callback,
 	}
 
 	@Override
-	public void onBitrareUpdate(long bitrate) {
+	public void onBitrateUpdate(long bitrate) {
 
 	}
 

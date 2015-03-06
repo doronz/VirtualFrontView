@@ -95,7 +95,7 @@ public class TestResults {
                 }
                 mCounting = true;
             } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
+
             }
         }
     }
