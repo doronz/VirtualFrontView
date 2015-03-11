@@ -18,6 +18,9 @@ import net.majorkernelpanic.streaming.video.VideoQuality;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.DatagramPacket;
@@ -26,6 +29,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
@@ -39,7 +44,7 @@ public class ClientLatencyActivity extends Activity implements Session.Callback,
 
     private String server_ip;
     private int server_port = 8988;
-    private int mDistance;
+    private String mDistance;
     private static final String SERVER_IP = "server ip";
     private static final String TAG = "Latency";
     private static final String DISTANCE = "distance";
@@ -71,7 +76,7 @@ public class ClientLatencyActivity extends Activity implements Session.Callback,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_latency);
         mPacketDetailsText = (TextView) findViewById(R.id.packet_details);
-        mDistance = Integer.valueOf(getIntent().getStringExtra(DISTANCE));
+        mDistance = getIntent().getStringExtra(DISTANCE);
         server_ip = getIntent().getStringExtra(SERVER_IP);
 
         final Semaphore signal = new Semaphore(0);
@@ -159,19 +164,16 @@ public class ClientLatencyActivity extends Activity implements Session.Callback,
                         int repeat = 0;
                         while(true) {
                             mUdpSocket.receive(pack);
-                            if (repeat < 100) {
-                                long packetTime = readUnixTime(pack);
-                                long currentTime = System.currentTimeMillis();
-                                long lag = System.currentTimeMillis() - readUnixTime(pack);
-                                publishProgress(String.valueOf(packetTime) + " - "
-                                        + String.valueOf(currentTime) + " - "
-                                        + String.valueOf(lag) + "ms");
-                            }
+                            if (repeat % 100 == 0)
+                                sb = new StringBuilder();
+                            long packetTime = readUnixTime(pack);
+                            long currentTime = System.currentTimeMillis();
+                            long lag = System.currentTimeMillis() - readUnixTime(pack);
+                            publishProgress(String.valueOf(packetTime) + " - "
+                                    + String.valueOf(currentTime) + " - "
+                                    + String.valueOf(lag) + "ms");
+                            recordResults(lag, mDistance);
                             repeat++;
-
-
-
-
                         }
                     } catch (SocketException e) {
                         publishProgress("SOCKET EXCEPTION: "+ e.getMessage());
@@ -439,6 +441,28 @@ public class ClientLatencyActivity extends Activity implements Session.Callback,
             Log.d(TAG, "Response from server: "+response.status);
 
             return response;
+        }
+    }
+
+    /**
+     * Writes the results in a csv file with timestamp, lag and distance.
+     */
+    private static void recordResults(long lag, String distance) {
+        File root = android.os.Environment.getExternalStorageDirectory();
+        File dir = new File(root.getAbsolutePath() + "/VirtualFrontView");
+        dir.mkdirs();
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH");
+        try {
+            File file;
+            file = new File(dir, "Latency (" + sdf.format(date) + ").csv");
+            FileWriter writer = new FileWriter(file, true);
+            writer.append(String.valueOf(lag) + "," + distance + '\n');
+            writer.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

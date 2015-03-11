@@ -48,7 +48,7 @@ public class TestResults {
                     startCountingPackets(true);
                 }
                 else {
-                    startCountingPackets(false);
+                    startCountingPackets(false); // Count packets on receiver side
                 }
             }
             else if (params[0].equalsIgnoreCase("stop")) {
