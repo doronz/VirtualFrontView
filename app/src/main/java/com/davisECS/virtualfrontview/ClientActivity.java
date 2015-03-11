@@ -167,7 +167,7 @@ public class ClientActivity extends Activity implements SurfaceHolder.Callback, 
             list.clear();
             list.add(new Media(libvlc, LibVLC.PathToURI("rtsp://" + serverip + ":8988")), false);
             libvlc.playIndex(0);
-            TestResults.RunTest("start", "receiver");
+            //TestResults.RunTest("start", "receiver");
             mChrono.start();
         } catch (Exception e) {
             Toast.makeText(this, "Error creating player!", Toast.LENGTH_LONG).show();
@@ -187,7 +187,7 @@ public class ClientActivity extends Activity implements SurfaceHolder.Callback, 
 
         mVideoWidth = 0;
         mVideoHeight = 0;
-        TestResults.RunTest("stop", "receiver", mDistance);
+        //TestResults.RunTest("stop", "receiver", mDistance);
         mChrono.stop();
     }
 

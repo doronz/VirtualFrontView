@@ -23,8 +23,6 @@ package net.majorkernelpanic.streaming.rtp;
 import android.os.SystemClock;
 import android.util.Log;
 
-import com.davisECS.virtualfrontview.TestResults;
-
 import net.majorkernelpanic.streaming.rtcp.SenderReport;
 
 import java.io.IOException;
@@ -51,7 +49,7 @@ public class RtpSocket implements Runnable {
 	/** Use this to use TCP for the transport protocol. */
 	public final static int TRANSPORT_TCP = 0x01;	
 	
-	public static final int RTP_HEADER_LENGTH = 12;
+	public static final int RTP_HEADER_LENGTH = 24; //TODO: Doron changes this to 24 from 12
 	public static final int MTU = 1300;
 
 	private MulticastSocket mSocket;
@@ -99,22 +97,26 @@ public class RtpSocket implements Runnable {
 			mPackets[i] = new DatagramPacket(mBuffers[i], 1);
 
 			/*							     Version(2)  Padding(0)					 					*/
-			/*									 ^		  ^			Extension(0)						*/
+			/*									 ^		  ^			Extension(1)TODO: Doron changed this*/
 			/*									 |		  |				^								*/
 			/*									 | --------				|								*/
 			/*									 | |---------------------								*/
 			/*									 | ||  -----------------------> Source Identifier(0)	*/
 			/*									 | ||  |												*/
-			mBuffers[i][0] = (byte) Integer.parseInt("10000000",2);
+			mBuffers[i][0] = (byte) Integer.parseInt("10010000",2);
 
 			/* Payload Type */
 			mBuffers[i][1] = (byte) 96;
 
-			/* Byte 2,3        ->  Sequence Number                   */
-			/* Byte 4,5,6,7    ->  Timestamp                         */
-			/* Byte 8,9,10,11  ->  Sync Source Identifier            */
+			/* Byte 2,3        ->  Sequence Number                          */
+			/* Byte 4,5,6,7    ->  Timestamp                                */
+			/* Byte 8,9,10,11  ->  Sync Source Identifier                   */
+            /* Byte 12,13      ->  Profile-specific extension ID            *///TODO: Added by doron
+            /* Byte 14,15      ->  Extension length                         *///TODO: Added by doron
+            /* Byte 16-23      ->  Unix timestamp                           *///TODO: Added by doron
 
 		}
+
 
 		try {
 		mSocket = new MulticastSocket();
@@ -123,6 +125,14 @@ public class RtpSocket implements Runnable {
 		}
 		
 	}
+
+    //TODO: added by doron
+    public void setUnixTime() {
+        setLong(mBuffers[mBufferIn], 29L, 12, 14); // extension ID, doron's fav #29
+        setLong(mBuffers[mBufferIn], 2L, 14, 16); // extension length in 32-bit units, set to 2 for 64-bit timestamp
+        setLong(mBuffers[mBufferIn], System.currentTimeMillis(),16, 24);
+
+    }
 
 	private void resetFifo() {
 		mCount = 0;
@@ -235,6 +245,7 @@ public class RtpSocket implements Runnable {
 	/** Sends the RTP packet over the network. */
 	public void commitBuffer(int length) throws IOException {
 		updateSequence();
+        setUnixTime(); //TODO: Doron added this.
 		mPackets[mBufferIn].setLength(length);
 
 		mAverageBitrate.push(length);
@@ -264,6 +275,7 @@ public class RtpSocket implements Runnable {
 	 * @param timestamp The new timestamp in ns.
 	 **/
 	public void updateTimestamp(long timestamp) {
+
 		mTimestamps[mBufferIn] = timestamp;
 		setLong(mBuffers[mBufferIn], (timestamp/100L)*(mClock/1000L)/10000L, 4, 8);
 	}

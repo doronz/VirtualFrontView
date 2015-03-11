@@ -20,8 +20,12 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
@@ -45,6 +49,7 @@ public class ClientLatencyActivity extends Activity implements Session.Callback,
 
     private int mCSeq;
     private Socket mSocket;
+    private DatagramSocket mUdpSocket;
     private BufferedReader mBufferedReader;
     private BufferedOutputStream mOutputStream;
     private Session mSession;
@@ -83,6 +88,7 @@ public class ClientLatencyActivity extends Activity implements Session.Callback,
                 .setCallback(this)
                 .setContext(getApplicationContext())
                 .setSurfaceView(mSurface)
+                .setDestination(server_ip)
                 .setAudioEncoder(SessionBuilder.AUDIO_NONE)
                 .setAudioQuality(new AudioQuality(16000, 32000))
                 .setVideoEncoder(SessionBuilder.VIDEO_H264)
@@ -129,32 +135,52 @@ public class ClientLatencyActivity extends Activity implements Session.Callback,
                         mState = STATE_STOPPED;
                         return;
                     }
-                    publishProgress("Sending DESCRIBE request to server.");
+                    //******* DESCRIBE ********\\
+                    publishProgress("Sending DESCRIBE request to server...");
                     Response response = sendDescribeRequest();
-                    publishProgress("Retrieving response...");
                     publishProgress(parseResponse(response));
-                  /*
-                    publishProgress("Sending ANNOUNCE request to server.");
-                    Response response = sendRequestAnnounce();
-                    publishProgress("Server response ---");
-                    publishProgress("Status: " + response.status);
-                    Iterator iter = response.headers.entrySet().iterator();
-                    publishProgress("Server response header ---");
-                    while (iter.hasNext()){
-                        Map.Entry pair = (Map.Entry)iter.next();
-                        publishProgress(pair.getKey() + ": " + pair.getValue());
-                    }
-                    publishProgress("Sending SETUP request to server.");
+                    //******* SETUP ********\\
+                    publishProgress("Sending SETUP request to server...");
                     response = sendRequestSetup();
-                    publishProgress("Server response ---");
-                    publishProgress("Status: " + response.status);
-                    iter = response.headers.entrySet().iterator();
-                    publishProgress("Server response header ---");
-                    while (iter.hasNext()){
-                        Map.Entry pair = (Map.Entry)iter.next();
-                        publishProgress(pair.getKey() + ": " + pair.getValue());
+                    publishProgress(parseResponse(response));
+                    //******* PLAY ********\\
+                    publishProgress("Sending PLAY request to server...");
+                    response = sendRequestPlay();
+                    publishProgress(parseResponse(response));
+                    /**
+                     * We are now ready to start receiving stream packets.
+                     */
+                    sb = new StringBuilder();
+                    publishProgress("Playing...");
+                    try {
+                        mUdpSocket = new DatagramSocket(5002); //TODO: Get this from the server response
+                        byte[] recv_data = new byte[1024];
+                        DatagramPacket pack = new DatagramPacket(recv_data, recv_data.length);
+                        int repeat = 0;
+                        while(true) {
+                            mUdpSocket.receive(pack);
+                            if (repeat < 100) {
+                                long packetTime = readUnixTime(pack);
+                                long currentTime = System.currentTimeMillis();
+                                long lag = System.currentTimeMillis() - readUnixTime(pack);
+                                publishProgress(String.valueOf(packetTime) + " - "
+                                        + String.valueOf(currentTime) + " - "
+                                        + String.valueOf(lag) + "ms");
+                            }
+                            repeat++;
+
+
+
+
+                        }
+                    } catch (SocketException e) {
+                        publishProgress("SOCKET EXCEPTION: "+ e.getMessage());
+                    } catch (UnknownHostException e) {
+                        publishProgress("UNKNOWN HOST EXCEPTION!");
+                    } catch (IOException e) {
+                        publishProgress("IOEXCEPTION: Can't receive at udpsocket.");
                     }
-                }*/
+
                 }
             });
         return null;
@@ -162,6 +188,56 @@ public class ClientLatencyActivity extends Activity implements Session.Callback,
     }
 
 
+    long readUnixTime(DatagramPacket pack){
+        byte[] pkt = pack.getData();
+        byte[] pktTime = new byte[8]; // long timestamp
+        for (int i = 16, j = 0; i < 24; i++, j++){
+            pktTime[j] = pkt[i];
+        }
+        return bytesToLong(pktTime);
+    }
+
+
+
+    public static String toHexString(byte[] bytes) {
+        char[] hexArray = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+        char[] hexChars = new char[bytes.length * 2];
+        int v;
+        for ( int j = 0; j < bytes.length; j++ ) {
+            v = bytes[j] & 0xFF;
+            hexChars[j*2] = hexArray[v/16];
+            hexChars[j*2 + 1] = hexArray[v%16];
+        }
+        return new String(hexChars);
+    }
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mUdpSocket.close();
+    }
+
+
+
+    public static long bytesToLong(byte[] bytes) {
+        ByteBuffer bb = ByteBuffer.wrap(bytes);
+        return bb.getLong();
+    }
+
+    public static int bytesToInt(byte[] bytes) {
+        int i = 0;
+        int pos = 0;
+        i += unsignedByteToInt(bytes[pos++]) << 24;
+        i += unsignedByteToInt(bytes[pos++]) << 16;
+        i += unsignedByteToInt(bytes[pos++]) << 8;
+        i += unsignedByteToInt(bytes[pos++]) << 0;
+        return i;
+    }
+    public static int unsignedByteToInt(byte b) {
+        return (int) b & 0xFF;
+    }
     // Helper method
     void updateUiLog(String text){
         sb.append(text + '\n');
@@ -173,13 +249,15 @@ public class ClientLatencyActivity extends Activity implements Session.Callback,
         tempSB.append("Server response ---\n");
         tempSB.append("Status: " + response.status + '\n');
         Iterator iter = response.headers.entrySet().iterator();
-        tempSB.append("Server response header ---");
+        tempSB.append("Server response header ---\n");
         while (iter.hasNext()){
             Map.Entry pair = (Map.Entry)iter.next();
             tempSB.append(pair.getKey() + ": " + pair.getValue()+'\n');
         }
         return tempSB.toString();
     }
+
+
 
     public Response sendDescribeRequest(){
         String request = "DESCRIBE rtsp://"+server_ip+":"+server_port+"/"+" RTSP/1.0\r\n"
@@ -196,34 +274,35 @@ public class ClientLatencyActivity extends Activity implements Session.Callback,
     }
 
 
-    public Response sendRequestAnnounce(){
-        String body = mSession.getSessionDescription();
-        String request = "ANNOUNCE rtsp://"+server_ip+":"+server_port+" RTSP/1.0\r\n" +
-                "CSeq: " + (++mCSeq) + "\r\n" +
-                "Content-Length: " + body.length() + "\r\n" +
-                "Content-Type: application/sdp \r\n\r\n" +
-                body;
-        try {
-            mOutputStream.write(request.getBytes("UTF-8"));
-            mOutputStream.flush();
-            Response response = Response.parseResponse(mBufferedReader);
-            setSessionID(response);
-            return response;
-        } catch (IOException e) {
-            Log.e(TAG, e.getMessage());
-        }
-
-        return null;
-    }
-
     public Response sendRequestSetup(){
         String params = "UDP;unicast;client_port="+(5000+2)+"-"+(5000+3)+";mode=receive";
         String request = "SETUP rtsp://"+server_ip+":"+server_port+"/"+"/trackID="+1+" RTSP/1.0\r\n" +
                 "Transport: RTP/AVP/"+params+"\r\n" +
-                addHeaders();
+                addHeaders() + "\r\n";
 
         Log.i(TAG,request.substring(0, request.indexOf("\r\n")));
 
+        try {
+            mOutputStream.write(request.getBytes("UTF-8"));
+            mOutputStream.flush();
+            Response response = Response.parseResponse(mBufferedReader);
+            if(response.headers.containsKey("session")){
+                mSessionID = response.headers.get("session");
+            }
+            return response;
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * I don't think this is necessary. The SETUP command starts the stream for us.
+     * @return
+     */
+    public Response sendRequestPlay(){
+        String request = "PLAY rtsp://"+server_ip+":"+server_port+"/"+" RTSP/1.0\r\n"
+                + "CSeq: " + (++mCSeq) + "\r\n"+"Session: "+ mSessionID +"\r\n\r\n";
         try {
             mOutputStream.write(request.getBytes("UTF-8"));
             mOutputStream.flush();
@@ -279,28 +358,28 @@ public class ClientLatencyActivity extends Activity implements Session.Callback,
 
     @Override
     public void onPreviewStarted() {
-        updateUiLog("Session preview started.");
+        //updateUiLog("Session preview started.");
     }
 
     @Override
     public void onSessionConfigured() {
-        updateUiLog("Session configured.");
-        mSession.start();
+        //updateUiLog("Session configured.");
+
     }
 
     @Override
     public void onSessionStarted() {
-        updateUiLog("Session started.");
+        //updateUiLog("Session started.");
     }
 
     @Override
     public void onSessionStopped() {
-        updateUiLog("Session stopped.");
+        //updateUiLog("Session stopped.");
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        mSession.startPreview();
+
     }
 
     @Override
@@ -310,7 +389,7 @@ public class ClientLatencyActivity extends Activity implements Session.Callback,
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        mSession.stop();
+
     }
 
     // Used to parse RTSP info
@@ -340,7 +419,8 @@ public class ClientLatencyActivity extends Activity implements Session.Callback,
             if ((line = input.readLine())==null) throw new SocketException("Connection lost");
             matcher = regexStatus.matcher(line);
             matcher.find();
-            response.status = Integer.parseInt(matcher.group(1));
+            if (matcher.matches())
+                response.status = Integer.parseInt(matcher.group(1));
 
             // Parsing headers of the request
             while ( (line = input.readLine()) != null) {
@@ -348,7 +428,8 @@ public class ClientLatencyActivity extends Activity implements Session.Callback,
                 if (line.length()>3) {
                     matcher = rexegHeader.matcher(line);
                     matcher.find();
-                    response.headers.put(matcher.group(1).toLowerCase(Locale.US),matcher.group(2));
+                    if (matcher.matches())
+                        response.headers.put(matcher.group(1).toLowerCase(Locale.US),matcher.group(2));
                 } else {
                     break;
                 }
